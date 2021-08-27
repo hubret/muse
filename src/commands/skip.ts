@@ -3,7 +3,6 @@ import {TYPES} from '../types';
 import {inject, injectable} from 'inversify';
 import PlayerManager from '../managers/player';
 import Command from '.';
-import LoadingMessage from '../utils/loading-message';
 import errorMsg from '../utils/error-msg';
 import embed from '../utils/embed';
 
@@ -35,10 +34,7 @@ export default class implements Command {
 
     const player = this.playerManager.get(msg.guild!.id);
 
-    const loader = new LoadingMessage(msg.channel as TextChannel);
-
     try {
-      await loader.start();
       await player.forward(numToSkip);
 
       await msg.react('⏩')
