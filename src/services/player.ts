@@ -52,17 +52,16 @@ export default class {
 
   idle(): void{
     if(this.voiceConnection) {
-      const player = this;
 
-      if (player.status === STATUS.PLAYING) {
-        player.pause();
+      if (this.status === STATUS.PLAYING) {
+        this.pause();
       }
       
-      const idler = setTimeout(()=>{
-        player.voiceConnection.disconnect();
-        player.voiceConnection = null;
-        player.dispatcher = null;
-      }, 30000)
+      const idler = setTimeout(function(){
+        this.voiceConnection.disconnect();
+        this.voiceConnection = null;
+        this.dispatcher = null;
+      }.bind(this), 30000)
     }
   }
 
