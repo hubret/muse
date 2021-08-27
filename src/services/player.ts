@@ -62,7 +62,7 @@ export default class {
         player.voiceConnection.disconnect();
         player.voiceConnection = null;
         player.dispatcher = null;
-      }, 30000))
+      }, 30000)
     }
   }
 
