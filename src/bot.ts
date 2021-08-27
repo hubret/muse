@@ -9,7 +9,7 @@ import NaturalLanguage from './services/natural-language-commands';
 import handleGuildCreate from './events/guild-create';
 import handleVoiceStateUpdate from './events/voice-state-update';
 import errorMsg from './utils/error-msg';
-import embed from '../utils/embed';
+import embed from './utils/embed';
 import {isUserInVoice} from './utils/channels';
 
 @injectable()
