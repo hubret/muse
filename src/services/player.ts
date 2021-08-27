@@ -58,11 +58,7 @@ export default class {
       }
       
       const idler = setTimeout(()=>{
-        if(this){
-          this.voiceConnection.disconnect();
-          this.voiceConnection = null;
-          this.dispatcher = null;
-        }
+        this.disconnect();
       }, 30000)
     }
   }
