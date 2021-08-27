@@ -57,11 +57,11 @@ export default class {
         this.pause();
       }
       
-      const idler = setTimeout(function(){
+      const idler = setTimeout(()=>{
         this.voiceConnection.disconnect();
         this.voiceConnection = null;
         this.dispatcher = null;
-      }.bind(this), 30000)
+      }, 30000)
     }
   }
 
