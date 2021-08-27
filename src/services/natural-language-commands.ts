@@ -14,39 +14,26 @@ export default class {
   }
 
   async execute(msg: Message): Promise<boolean> {
-    if (msg.content.startsWith('say') && msg.content.endsWith('muse')) {
-      const res = msg.content.slice(3, msg.content.indexOf('muse')).trim();
+    // if (msg.content.startsWith('say') && msg.content.endsWith('muse')) {
+    //   const res = msg.content.slice(3, msg.content.indexOf('muse')).trim();
 
-      await msg.channel.send(res);
+    //   await msg.channel.send(res);
+    //   return true;
+    // }
+
+    if (msg.content.toLowerCase().includes('imagine dragons')) {
+      await msg.channel.send('Imagine dragon my balls across your face');
       return true;
     }
 
-    if (msg.content.toLowerCase().includes('packers')) {
-      await Promise.all([
-        msg.channel.send('GO PACKERS GO!!!'),
-        this.playClip(msg.guild!, {title: 'GO PACKERS!', artist: 'Unknown', url: 'https://www.youtube.com/watch?v=qkdtID7mY3E', length: 204, playlist: null, isLive: false}, 8, 10)
-      ]);
+    // if (msg.content.toLowerCase().includes('bitconnect')) {
+    //   await Promise.all([
+    //     msg.channel.send('🌊 🌊 🌊 🌊'),
+    //     this.playClip(msg.guild!, {title: 'BITCONNEEECCT', artist: 'Carlos Matos', url: 'https://www.youtube.com/watch?v=lCcwn6bGUtU', length: 227, playlist: null, isLive: false}, 50, 13)
+    //   ]);
 
-      return true;
-    }
-
-    if (msg.content.toLowerCase().includes('bears')) {
-      await Promise.all([
-        msg.channel.send('F*** THE BEARS'),
-        this.playClip(msg.guild!, {title: 'GO PACKERS!', artist: 'Charlie Berens', url: 'https://www.youtube.com/watch?v=UaqlE9Pyy_Q', length: 385, playlist: null, isLive: false}, 358, 5.5)
-      ]);
-
-      return true;
-    }
-
-    if (msg.content.toLowerCase().includes('bitconnect')) {
-      await Promise.all([
-        msg.channel.send('🌊 🌊 🌊 🌊'),
-        this.playClip(msg.guild!, {title: 'BITCONNEEECCT', artist: 'Carlos Matos', url: 'https://www.youtube.com/watch?v=lCcwn6bGUtU', length: 227, playlist: null, isLive: false}, 50, 13)
-      ]);
-
-      return true;
-    }
+    //   return true;
+    // }
 
     return false;
   }

@@ -50,6 +50,22 @@ export default class {
     this.voiceConnection = conn;
   }
 
+  idle(): void{
+    if(this.voiceConnection) {
+      const player = this;
+
+      if (player.status === STATUS.PLAYING) {
+        player.pause();
+      }
+      
+      const idler = setTimeout(()=>{
+        player.voiceConnection.disconnect();
+        player.voiceConnection = null;
+        player.dispatcher = null;
+      }, 30000))
+    }
+  }
+
   disconnect(breakConnection = true): void {
     if (this.voiceConnection) {
       if (this.status === STATUS.PLAYING) {
@@ -169,7 +185,7 @@ export default class {
         await this.play();
       } else {
         this.status = STATUS.PAUSED;
-        this.disconnect();
+        this.idle();
       }
     } catch (error: unknown) {
       this.queuePosition--;

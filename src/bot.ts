@@ -1,4 +1,4 @@
-import {Client, Message, Collection} from 'discord.js';
+import {Client, Message, Collection, MessageEmbed} from 'discord.js';
 import {inject, injectable} from 'inversify';
 import {TYPES} from './types';
 import {Settings, Shortcut} from './models';
@@ -84,7 +84,7 @@ export default class {
 
       try {
         if (handler.requiresVC && !isUserInVoice(msg.guild, msg.author)) {
-          await msg.channel.send(errorMsg('gotta be in a voice channel'));
+          await msg.channel.send(new MessageEmbed().setColor('#4C8F55').setDescription(`You're actually really dumb ${msg.author.tag}. You have to join a voice channel first.`));
           return;
         }
 
