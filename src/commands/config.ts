@@ -2,6 +2,7 @@ import {TextChannel, Message, GuildChannel} from 'discord.js';
 import {injectable} from 'inversify';
 import {Settings} from '../models';
 import errorMsg from '../utils/error-msg';
+import embed from '../utils/embed';
 import Command from '.';
 
 @injectable()
@@ -31,12 +32,12 @@ export default class implements Command {
     const setting = args[0];
 
     if (args.length !== 2) {
-      await msg.channel.send(errorMsg('incorrect number of arguments'));
+      await msg.channel.send(embed(errorMsg('incorrect number of arguments')));
       return;
     }
 
     if (msg.author.id !== msg.guild!.owner!.id) {
-      await msg.channel.send(errorMsg('not authorized'));
+      await msg.channel.send(embed(errorMsg('not authorized')));
       return;
     }
 
@@ -46,7 +47,7 @@ export default class implements Command {
 
         await Settings.update({prefix: newPrefix}, {where: {guildId: msg.guild!.id}});
 
-        await msg.channel.send(`👍 prefix updated to \`${newPrefix}\``);
+        await msg.channel.send(embed(`👍 prefix updated to \`${newPrefix}\``));
         break;
       }
 

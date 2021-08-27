@@ -5,6 +5,7 @@ import PlayerManager from '../managers/player';
 import Command from '.';
 import LoadingMessage from '../utils/loading-message';
 import errorMsg from '../utils/error-msg';
+import embed from '../utils/embed';
 
 @injectable()
 export default class implements Command {
@@ -40,9 +41,9 @@ export default class implements Command {
       await loader.start();
       await player.forward(numToSkip);
 
-      await loader.stop('keep \'er movin\'');
+      await msg.react('⏩')
     } catch (_: unknown) {
-      await loader.stop(errorMsg('no song to skip to'));
+      await msg.channel.send(embed(errorMsg(`No track to skip to`)))
     }
   }
 }

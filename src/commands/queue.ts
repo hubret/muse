@@ -8,6 +8,7 @@ import getProgressBar from '../utils/get-progress-bar';
 import errorMsg from '../utils/error-msg';
 import {prettyTime} from '../utils/time';
 import getYouTubeID from 'get-youtube-id';
+import embed from '../utils/embed';
 
 const PAGE_SIZE = 10;
 
@@ -76,7 +77,7 @@ export default class implements Command {
 
       await msg.channel.send(embed);
     } else {
-      await msg.channel.send('queue empty');
+      await msg.channel.send(embed('The queue is empty'));
     }
   }
 }

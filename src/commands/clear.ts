@@ -1,8 +1,9 @@
-import {Message} from 'discord.js';
+import {Message, MessageEmbed} from 'discord.js';
 import {TYPES} from '../types';
 import {inject, injectable} from 'inversify';
 import PlayerManager from '../managers/player';
 import Command from '.';
+import embed from '../utils/embed';
 
 @injectable()
 export default class implements Command {
@@ -23,6 +24,6 @@ export default class implements Command {
   public async execute(msg: Message, _: string []): Promise<void> {
     this.playerManager.get(msg.guild!.id).clear();
 
-    await msg.channel.send('clearer than a field after a fresh harvest');
+    await msg.channel.send(embed(`Queue cleared`));
   }
 }

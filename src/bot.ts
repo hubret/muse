@@ -9,6 +9,7 @@ import NaturalLanguage from './services/natural-language-commands';
 import handleGuildCreate from './events/guild-create';
 import handleVoiceStateUpdate from './events/voice-state-update';
 import errorMsg from './utils/error-msg';
+import embed from '../utils/embed';
 import {isUserInVoice} from './utils/channels';
 
 @injectable()
@@ -84,7 +85,7 @@ export default class {
 
       try {
         if (handler.requiresVC && !isUserInVoice(msg.guild, msg.author)) {
-          await msg.channel.send(new MessageEmbed().setColor('#4C8F55').setDescription(`You're actually really dumb ${msg.author.tag}. You have to join a voice channel first.`));
+          await msg.channel.send(embed(`You're actually really dumb ${msg.author.tag}. You have to join a voice channel first.`));
           return;
         }
 

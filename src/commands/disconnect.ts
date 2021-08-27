@@ -25,12 +25,12 @@ export default class implements Command {
     const player = this.playerManager.get(msg.guild!.id);
 
     if (!player.voiceConnection) {
-      await msg.channel.send(errorMsg('not connected'));
+      // await msg.channel.send(errorMsg('not connected'));
       return;
     }
 
     player.disconnect();
 
-    await msg.channel.send('u betcha');
+    // await msg.channel.send('u betcha');
   }
 }
