@@ -40,12 +40,10 @@ export default class implements Command {
       embed.setTitle(currentSong.title);
       embed.setURL(`https://www.youtube.com/watch?v=${currentSong.url.length === 11 ? currentSong.url : getYouTubeID(currentSong.url) ?? ''}`);
 
-      let description = player.status === STATUS.PLAYING ? '⏹️' : '▶️';
-      description += ' ';
-      description += getProgressBar(20, player.getPosition() / currentSong.length);
+      let description = '';
+      description += getProgressBar(25, player.getPosition() / currentSong.length);
       description += ' ';
       description += `\`[${prettyTime(player.getPosition())}/${currentSong.isLive ? 'live' : prettyTime(currentSong.length)}]\``;
-      description += ' 🔉';
       description += player.isQueueEmpty() ? '' : '\n\n**Next up:**';
 
       description += '\n';
@@ -53,13 +51,14 @@ export default class implements Command {
 
       player.getQueue().forEach((song, i) => {
         if(Math.abs(i - player.getQueuePosition()) < 3){
-          description += `${i+1} \t${song.title.substring(0, 55)}\n` ;
+          description += `${player.getQueuePosition() == i ? '▶️' : ''}${i+1} \t${song.title.substring(0, 55)}\n` ;
         }
       });
 
       if(player.queueSize() - player.getQueuePosition() > 3){
+        const more = player.queueSize() - player.getQueuePosition() - 3;
         description += `...\n`
-        description += `${player.queueSize() - player.getQueuePosition() - 3} more tracks`
+        description += `${more} more track${more == 1 ? '' : 's'}`
       }
 
       description += '```'
