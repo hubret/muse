@@ -7,6 +7,7 @@ import PlayerManager from '../managers/player';
 import {getMostPopularVoiceChannel} from '../utils/channels';
 import LoadingMessage from '../utils/loading-message';
 import errorMsg from '../utils/error-msg';
+import embed from '../utils/embed';
 import Command from '.';
 import GetSongs from '../services/get-songs';
 
@@ -142,9 +143,9 @@ export default class implements Command {
     }
 
     if (newSongs.length === 1) {
-      await res.stop(`u betcha, **${firstSong.title}** added to the${addToFrontOfQueue ? ' front of the' : ''} queue${extraMsg}`);
+      await res.stop(embed(`Added **${firstSong.title}** to the${addToFrontOfQueue ? ' front of the' : ''} queue${extraMsg} [${msg.author.username}]`));
     } else {
-      await res.stop(`u betcha, **${firstSong.title}** and ${newSongs.length - 1} other songs were added to the queue${extraMsg}`);
+      await res.stop(embed(`Added ${newSongs.length} tracks to the queue${extraMsg} [${msg.author.username}]`));
     }
 
     if (queueOldSize === 0 && !wasPlayingSong) {

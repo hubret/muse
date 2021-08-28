@@ -85,7 +85,7 @@ export default class {
 
       try {
         if (handler.requiresVC && !isUserInVoice(msg.guild, msg.author)) {
-          await msg.channel.send(embed(`You're actually really dumb ${msg.author.tag}. You have to join a voice channel first.`));
+          await msg.channel.send(embed(`You're actually really dumb ${msg.author.username}. You have to join a voice channel first.`));
           return;
         }
 

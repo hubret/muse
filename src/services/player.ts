@@ -38,6 +38,8 @@ export default class {
   private playPositionInterval: NodeJS.Timeout | undefined;
   private lastSongURL = '';
 
+  private idler: number | null = null;
+
   private positionInSeconds = 0;
 
   constructor(cacheDir: string) {
@@ -59,7 +61,7 @@ export default class {
         this.pause();
       }
       
-      const idler = setTimeout(()=>{
+      this.idler = setTimeout(()=>{
         this.disconnect();
       }, 30000)
     }
@@ -156,6 +158,8 @@ export default class {
         this.startTrackingPosition(0);
         this.lastSongURL = currentSong.url;
       }
+      clearTimeout(this.idler);
+      this.idler = null;
     } catch (error: unknown) {
       this.removeCurrent();
       throw error;
