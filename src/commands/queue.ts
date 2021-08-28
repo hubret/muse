@@ -16,7 +16,7 @@ const PAGE_SIZE = 10;
 @injectable()
 export default class implements Command {
   public name = 'queue';
-  public aliases = ['q'];
+  public aliases = ['q', 'np'];
   public examples = [
     ['queue', 'shows current queue'],
     ['queue 2', 'shows second page of queue']

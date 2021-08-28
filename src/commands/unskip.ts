@@ -8,7 +8,7 @@ import Command from '.';
 @injectable()
 export default class implements Command {
   public name = 'unskip';
-  public aliases = ['back'];
+  public aliases = ['back', 'prev'];
   public examples = [
     ['unskip', 'goes back in the queue by one song']
   ];

@@ -9,7 +9,7 @@ import embed from '../utils/embed';
 @injectable()
 export default class implements Command {
   public name = 'skip';
-  public aliases = ['s'];
+  public aliases = ['s', 'next', 'ff'];
   public examples = [
     ['skip', 'skips the current song'],
     ['skip 2', 'skips the next 2 songs']
