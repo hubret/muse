@@ -49,7 +49,7 @@ export default class implements Command {
       description += player.isQueueEmpty() ? '' : '\n\n**Next up:**';
 
       description += '\n';
-      description += '```ml';
+      description += '```ml\n';
 
       player.getQueue().forEach((song, i) => {
         if(Math.abs(i - player.getQueuePosition()) < 3){
