@@ -53,10 +53,11 @@ export default class implements Command {
         if(Math.abs(i - player.getQueuePosition()) < 3){
           if(player.getQueuePosition() == i){
             description += '\n';
-            description += '▶️\tNow Playing\n';
+            description += '\t\t⬐ current track\n';
           }
-          description += `${i+1} \t${song.title.substring(0, 55)}\n` ;
+          description += `${i+1}) \t${song.title.substring(0, 55)}\n` ;
           if(player.getQueuePosition() == i){
+            description += '\t\t⬑ current track\n';
             description += '\n';
           }
         }
