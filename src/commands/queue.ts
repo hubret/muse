@@ -48,21 +48,23 @@ export default class implements Command {
       description += ' 🔉';
       description += player.isQueueEmpty() ? '' : '\n\n**Next up:**';
 
-      embed.setDescription(description);
-
-      let footer = `Source: ${currentSong.artist}`;
-
-      if (currentSong.playlist) {
-        footer += ` (${currentSong.playlist.title})`;
-      }
-
-      embed.setFooter(footer);
+      description += '\n';
+      description += '```';
 
       player.getQueue().forEach((song, i) => {
         if(Math.abs(i - player.getQueuePosition()) < 3){
-          embed.addField(`${i}`, song.title, false);
+          description += `${i+1} \t${song.title}\n` ;
         }
       });
+
+      if(player.queueSize() - player.getQueuePosition() > 3){
+        description += `...\n`
+        description += `${player.queueSize() - player.getQueuePosition()} more tracks`
+      }
+
+      description += '```'
+
+      embed.setDescription(description);
 
       await msg.channel.send(embed);
     } else {
