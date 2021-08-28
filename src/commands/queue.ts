@@ -58,8 +58,10 @@ export default class implements Command {
 
       embed.setFooter(footer);
 
-      player.getQueue().slice(player.getQueuePosition() - 3, player.getQueuePosition() + 3).forEach((song, i) => {
-        embed.addField(`${(player.getQueuePosition() + i - 3).toString()}`, song.title, false);
+      player.getQueue().forEach((song, i) => {
+        if(Math.abs(i - player.getQueuePosition()) < 3){
+          embed.addField(`${i}`, song.title, false);
+        }
       });
 
       await msg.channel.send(embed);
