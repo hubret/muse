@@ -38,7 +38,7 @@ export default class {
   private playPositionInterval: NodeJS.Timeout | undefined;
   private lastSongURL = '';
 
-  private idler: number | null = null;
+  private idler: ReturnType<typeof setTimeout> | null = null;
 
   private positionInSeconds = 0;
 

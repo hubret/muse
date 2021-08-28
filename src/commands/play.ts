@@ -40,9 +40,6 @@ export default class implements Command {
   public async execute(msg: Message, args: string []): Promise<void> {
     const [targetVoiceChannel] = getMostPopularVoiceChannel(msg.guild!);
 
-    const res = new LoadingMessage(msg.channel as TextChannel);
-    await res.start();
-
     const player = this.playerManager.get(msg.guild!.id);
 
     const queueOldSize = player.queueSize();
@@ -50,20 +47,20 @@ export default class implements Command {
 
     if (args.length === 0) {
       if (player.status === STATUS.PLAYING) {
-        await res.stop(errorMsg('already playing, give me a song name'));
+        await msg.channel.send(errorMsg('already playing, give me a song name'));
         return;
       }
 
       // Must be resuming play
       if (!wasPlayingSong) {
-        await res.stop(errorMsg('nothing to play'));
+        await msg.channel.send(errorMsg('nothing to play'));
         return;
       }
 
       await player.connect(targetVoiceChannel);
       await player.play();
 
-      await res.stop('the stop-and-go light is now green');
+      await msg.channel.send('the stop-and-go light is now green');
       return;
     }
 
@@ -124,13 +121,13 @@ export default class implements Command {
       if (song) {
         newSongs.push(song);
       } else {
-        await res.stop(errorMsg('that doesn\'t exist'));
+        await msg.channel.send(errorMsg('that doesn\'t exist'));
         return;
       }
     }
 
     if (newSongs.length === 0) {
-      await res.stop(errorMsg('no songs found'));
+      await msg.channel.send(errorMsg('no songs found'));
       return;
     }
 
@@ -143,9 +140,9 @@ export default class implements Command {
     }
 
     if (newSongs.length === 1) {
-      await res.stop(embed(`Added **${firstSong.title}** to the${addToFrontOfQueue ? ' front of the' : ''} queue${extraMsg} [${msg.author.username}]`));
+      await msg.channel.send(embed(`Added **${firstSong.title}** to the${addToFrontOfQueue ? ' front of the' : ''} queue${extraMsg} [${msg.author.username}]`));
     } else {
-      await res.stop(embed(`Added ${newSongs.length} tracks to the queue${extraMsg} [${msg.author.username}]`));
+      await msg.channel.send(embed(`Added ${newSongs.length} tracks to the queue${extraMsg} [${msg.author.username}]`));
     }
 
     if (queueOldSize === 0 && !wasPlayingSong) {
