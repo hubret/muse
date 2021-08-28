@@ -51,7 +51,14 @@ export default class implements Command {
 
       player.getQueue().forEach((song, i) => {
         if(Math.abs(i - player.getQueuePosition()) < 3){
-          description += `${player.getQueuePosition() == i ? '▶️' : ''}${i+1} \t${song.title.substring(0, 55)}\n` ;
+          if(player.getQueuePosition() == i){
+            description += '\n';
+            description += '▶️\tNow Playing\n';
+          }
+          description += `${i+1} \t${song.title.substring(0, 55)}\n` ;
+          if(player.getQueuePosition() == i){
+            description += '\n';
+          }
         }
       });
 
