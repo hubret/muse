@@ -36,22 +36,21 @@ export default class implements Command {
     if (currentSong) {
       const queueSize = player.queueSize();
 
-      const embed = new MessageEmbed();
+      const emb = embed('');
 
-      embed.setTitle(currentSong.title);
-      embed.setURL(`https://www.youtube.com/watch?v=${currentSong.url.length === 11 ? currentSong.url : getYouTubeID(currentSong.url) ?? ''}`);
+      emb.setTitle(currentSong.title);
+      emb.setURL(`https://www.youtube.com/watch?v=${currentSong.url.length === 11 ? currentSong.url : getYouTubeID(currentSong.url) ?? ''}`);
 
       let description = '';
       description += getProgressBar(25, player.getPosition() / currentSong.length);
       description += ' ';
       description += `\`[${prettyTime(player.getPosition())}/${currentSong.isLive ? 'live' : prettyTime(currentSong.length)}]\``;
-      description += player.isQueueEmpty() ? '' : '\n\n**Next up:**';
 
       description += '\n';
       description += '```ml\n';
 
       player.getQueue().forEach((song, i) => {
-        if(Math.abs(i - player.getQueuePosition()) < 3){
+        if(Math.abs(i - player.getQueuePosition()) < 6){
           if(player.getQueuePosition() == i){
             description += '\t\t⬐ current track\n';
           }
@@ -62,17 +61,17 @@ export default class implements Command {
         }
       });
 
-      if(player.queueSize() - player.getQueuePosition() > 3){
-        const more = player.queueSize() - player.getQueuePosition() - 3;
+      if(player.queueSize() - player.getQueuePosition() > 6){
+        const more = player.queueSize() - player.getQueuePosition() - 6;
         description += `\n`
         description += `\t\t${more} more track${more == 1 ? '' : 's'}`
       }
 
       description += '```'
 
-      embed.setDescription(description);
+      emb.setDescription(description);
 
-      await msg.channel.send(embed);
+      await msg.channel.send(emb);
     } else {
       await msg.channel.send(embed('The queue is empty'));
     }
