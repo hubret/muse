@@ -59,7 +59,7 @@ export default class implements Command {
 
       if(player.queueSize() - player.getQueuePosition() > 3){
         description += `...\n`
-        description += `${player.queueSize() - player.getQueuePosition()} more tracks`
+        description += `${player.queueSize() - player.getQueuePosition() - 3} more tracks`
       }
 
       description += '```'
