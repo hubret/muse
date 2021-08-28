@@ -227,8 +227,12 @@ export default class {
     return null;
   }
 
+  getQueuePosition(): number {
+    return this.queuePosition;
+  }
+
   getQueue(): QueuedSong[] {
-    return this.queue.slice(this.queuePosition + 1);
+    return this.queue;
   }
 
   add(song: QueuedSong, {immediate = false} = {}): void {

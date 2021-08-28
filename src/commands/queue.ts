@@ -30,50 +30,37 @@ export default class implements Command {
   public async execute(msg: Message, args: string []): Promise<void> {
     const player = this.playerManager.get(msg.guild!.id);
 
-    const currentlyPlaying = player.getCurrent();
+    const currentSong = player.getCurrent();
 
-    if (currentlyPlaying) {
+    if (currentSong) {
       const queueSize = player.queueSize();
-      const queuePage = args[0] ? parseInt(args[0], 10) : 1;
-
-      const maxQueuePage = Math.ceil((queueSize + 1) / PAGE_SIZE);
-
-      if (queuePage > maxQueuePage) {
-        await msg.channel.send(errorMsg('the queue isn\'t that big'));
-        return;
-      }
 
       const embed = new MessageEmbed();
 
-      embed.setTitle(currentlyPlaying.title);
-      embed.setURL(`https://www.youtube.com/watch?v=${currentlyPlaying.url.length === 11 ? currentlyPlaying.url : getYouTubeID(currentlyPlaying.url) ?? ''}`);
+      embed.setTitle(currentSong.title);
+      embed.setURL(`https://www.youtube.com/watch?v=${currentSong.url.length === 11 ? currentSong.url : getYouTubeID(currentSong.url) ?? ''}`);
 
       let description = player.status === STATUS.PLAYING ? '⏹️' : '▶️';
       description += ' ';
-      description += getProgressBar(20, player.getPosition() / currentlyPlaying.length);
+      description += getProgressBar(20, player.getPosition() / currentSong.length);
       description += ' ';
-      description += `\`[${prettyTime(player.getPosition())}/${currentlyPlaying.isLive ? 'live' : prettyTime(currentlyPlaying.length)}]\``;
+      description += `\`[${prettyTime(player.getPosition())}/${currentSong.isLive ? 'live' : prettyTime(currentSong.length)}]\``;
       description += ' 🔉';
       description += player.isQueueEmpty() ? '' : '\n\n**Next up:**';
 
       embed.setDescription(description);
 
-      let footer = `Source: ${currentlyPlaying.artist}`;
+      let footer = `Source: ${currentSong.artist}`;
 
-      if (currentlyPlaying.playlist) {
-        footer += ` (${currentlyPlaying.playlist.title})`;
+      if (currentSong.playlist) {
+        footer += ` (${currentSong.playlist.title})`;
       }
 
       embed.setFooter(footer);
 
-      const queuePageBegin = (queuePage - 1) * PAGE_SIZE;
-      const queuePageEnd = queuePageBegin + PAGE_SIZE;
-
-      player.getQueue().slice(queuePageBegin, queuePageEnd).forEach((song, i) => {
-        embed.addField(`${(i + 1 + queuePageBegin).toString()}/${queueSize.toString()}`, song.title, false);
+      player.getQueue().slice(player.getQueuePosition() - 3, player.getQueuePosition() + 3).forEach((song, i) => {
+        embed.addField(`${(player.getQueuePosition() + i - 3).toString()}`, song.title, false);
       });
-
-      embed.addField('Page', `${queuePage} out of ${maxQueuePage}`, false);
 
       await msg.channel.send(embed);
     } else {
