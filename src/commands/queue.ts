@@ -52,21 +52,19 @@ export default class implements Command {
       player.getQueue().forEach((song, i) => {
         if(Math.abs(i - player.getQueuePosition()) < 3){
           if(player.getQueuePosition() == i){
-            description += '\n';
             description += '\t\t⬐ current track\n';
           }
           description += `${i+1}) \t${song.title.substring(0, 55)}\n` ;
           if(player.getQueuePosition() == i){
             description += '\t\t⬑ current track\n';
-            description += '\n';
           }
         }
       });
 
       if(player.queueSize() - player.getQueuePosition() > 3){
         const more = player.queueSize() - player.getQueuePosition() - 3;
-        description += `...\n`
-        description += `${more} more track${more == 1 ? '' : 's'}`
+        description += `\n`
+        description += `\t\t${more} more track${more == 1 ? '' : 's'}`
       }
 
       description += '```'
