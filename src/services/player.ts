@@ -52,6 +52,8 @@ export default class {
 
   idle(): void{
     if(this.voiceConnection) {
+  
+      this.stopTrackingPosition();
 
       if (this.status === STATUS.PLAYING) {
         this.pause();
@@ -181,7 +183,6 @@ export default class {
       if (this.getCurrent() && this.status !== STATUS.PAUSED) {
         await this.play();
       } else {
-        this.status = STATUS.PAUSED;
         this.idle();
       }
     } catch (error: unknown) {
