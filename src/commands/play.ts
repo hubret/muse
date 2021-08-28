@@ -87,7 +87,7 @@ export default class implements Command {
           if (song) {
             newSongs.push(song);
           } else {
-            await res.stop(errorMsg('that doesn\'t exist'));
+            await msg.channel.send(errorMsg('that doesn\'t exist'));
             return;
           }
         }
