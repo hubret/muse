@@ -6,6 +6,7 @@ import {STATUS} from '../services/player';
 import Command from '.';
 import getProgressBar from '../utils/get-progress-bar';
 import errorMsg from '../utils/error-msg';
+import {truncate} from '../utils/truncate';
 import {prettyTime} from '../utils/time';
 import getYouTubeID from 'get-youtube-id';
 import embed from '../utils/embed';
@@ -54,7 +55,7 @@ export default class implements Command {
           if(player.getQueuePosition() == i){
             description += '\t\t⬐ current track\n';
           }
-          description += `${i+1}) \t${song.title.substring(0, 55)}\n` ;
+          description += `${i+1}) \t${truncate(song.title)}\n` ;
           if(player.getQueuePosition() == i){
             description += '\t\t⬑ current track\n';
           }
