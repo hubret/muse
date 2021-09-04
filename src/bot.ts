@@ -36,6 +36,8 @@ export default class {
       commandNames.forEach(commandName => this.commands.set(commandName, command));
     });
 
+    this.client.user.setActivity("You're mom");
+
     this.client.on('message', async (msg: Message) => {
       // Get guild settings
       if (!msg.guild) {
