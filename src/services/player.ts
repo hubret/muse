@@ -67,7 +67,7 @@ export default class {
 
       this.idler = setTimeout(()=>{
         this.disconnect();
-      }, 30000)
+      }, 90000)
     }
   }
 

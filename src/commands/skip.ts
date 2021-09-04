@@ -37,7 +37,7 @@ export default class implements Command {
     try {
       await player.forward(numToSkip);
 
-      await msg.react('⏩')
+      await msg.react('⏭')
     } catch (_: unknown) {
       await msg.channel.send(embed(errorMsg(`No track to skip to`)))
     }

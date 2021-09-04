@@ -27,9 +27,9 @@ export default class implements Command {
     try {
       await player.back();
 
-      await msg.channel.send('back \'er up\'');
+      await msg.react('⏮')
     } catch (_: unknown) {
-      await msg.channel.send(errorMsg('no song to go back to'));
+      // await msg.channel.send(errorMsg('no song to go back to'));
     }
   }
 }
