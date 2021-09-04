@@ -36,8 +36,6 @@ export default class {
       commandNames.forEach(commandName => this.commands.set(commandName, command));
     });
 
-    this.client.user.setActivity("You're mom");
-
     this.client.on('message', async (msg: Message) => {
       // Get guild settings
       if (!msg.guild) {
@@ -99,6 +97,7 @@ export default class {
     });
 
     this.client.on('ready', async () => {
+      this.client.user.setActivity("You're mom");
       console.log(`Ready! Invite the bot with https://discordapp.com/oauth2/authorize?client_id=${this.clientId}&scope=bot&permissions=36760640`);
     });
 
