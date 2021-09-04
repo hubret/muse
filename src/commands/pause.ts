@@ -31,6 +31,6 @@ export default class implements Command {
     }
 
     player.pause();
-    await msg.channel.send('the stop-and-go light is now red');
+    await msg.react('⏸')
   }
 }
