@@ -146,10 +146,13 @@ export default class implements Command {
       await msg.channel.send(embed(`Added ${newSongs.length} tracks to the queue${extraMsg} [${msg.author.username}]`));
     }
 
-    if (player.voiceConnection === null) {
-      await player.connect(targetVoiceChannel);
-    }
+    if (!wasPlayingSong) {
+      // Only auto-play if nothing is playing
+      if (player.voiceConnection === null) {
+        await player.connect(targetVoiceChannel);
+      }
 
-    await player.play();
+      await player.play();
+    }
   }
 }
