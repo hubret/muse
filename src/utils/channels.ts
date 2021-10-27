@@ -1,4 +1,4 @@
-import {Guild, VoiceChannel, User} from 'discord.js';
+import {Guild, VoiceChannel, User, Message} from 'discord.js';
 
 export const isUserInVoice = (guild: Guild, user: User): boolean => {
   let inVoice = false;
@@ -11,6 +11,15 @@ export const isUserInVoice = (guild: Guild, user: User): boolean => {
 
   return inVoice;
 };
+
+export const isAuthorInVoice = (msg: Message): boolean => {
+  let {voiceChannel} = msg.author;
+  if(!voiceChannel){
+    return false;
+  }else{
+    return true;
+  }
+}
 
 export const getSizeWithoutBots = (channel: VoiceChannel): number => channel.members.array().reduce((s, member) => {
   if (!member.user.bot) {

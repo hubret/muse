@@ -11,7 +11,8 @@ export const TYPES = {
   Command: Symbol('Command'),
   Lib: {
     YouTube: Symbol('YouTube'),
-    Spotify: Symbol('Spotify')
+    Spotify: Symbol('Spotify'),
+    Soundcloud: Symbol('Soundcloud')
   },
   Managers: {
     Player: Symbol('PlayerManager')

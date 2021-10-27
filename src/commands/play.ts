@@ -38,7 +38,7 @@ export default class implements Command {
   }
 
   public async execute(msg: Message, args: string []): Promise<void> {
-    const [targetVoiceChannel] = getMostPopularVoiceChannel(msg.guild!);
+    const [targetVoiceChannel] = msg.author.voiceChannel;
 
     const player = this.playerManager.get(msg.guild!.id);
 
@@ -75,6 +75,7 @@ export default class implements Command {
       const url = new URL(args[0]);
 
       const YOUTUBE_HOSTS = ['www.youtube.com', 'youtu.be', 'youtube.com'];
+      const SOUNDCLOUD_HOSTS = ['www.soundcloud.com', 'soundcloud.com'];
 
       if (YOUTUBE_HOSTS.includes(url.host)) {
         // YouTube source
@@ -91,6 +92,14 @@ export default class implements Command {
             await msg.channel.send(errorMsg('that doesn\'t exist'));
             return;
           }
+        }
+      } else if (SOUNDCLOUD_HOSTS.includes(url.host)) {
+        const song = await this.getSongs.soundcloudSong(url.href);
+        if (song) {
+          newSongs.push(song);
+        } else {
+          await msg.channel.send(errorMsg('that doesn\'t exist'));
+          return;
         }
       } else if (url.protocol === 'spotify:' || url.host === 'open.spotify.com') {
         const [convertedSongs, nSongsNotFound, totalSongs] = await this.getSongs.spotifySource(args[0]);

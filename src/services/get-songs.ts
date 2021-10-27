@@ -5,6 +5,7 @@ import got from 'got';
 import spotifyURI from 'spotify-uri';
 import Spotify from 'spotify-web-api-node';
 import YouTube, {YoutubePlaylistItem} from 'youtube.ts';
+import Soundcloud from 'soundcloud.ts';
 import pLimit from 'p-limit';
 import shuffle from 'array-shuffle';
 import {QueuedSong, QueuedPlaylist} from '../services/player';
@@ -15,11 +16,13 @@ export default class {
   private readonly youtube: YouTube;
   private readonly youtubeKey: string;
   private readonly spotify: Spotify;
+  private readonly soundcloud: Soundcloud;
 
-  constructor(@inject(TYPES.Lib.YouTube) youtube: YouTube, @inject(TYPES.Config.YOUTUBE_API_KEY) youtubeKey: string, @inject(TYPES.Lib.Spotify) spotify: Spotify) {
+  constructor(@inject(TYPES.Lib.YouTube) youtube: YouTube, @inject(TYPES.Config.YOUTUBE_API_KEY) youtubeKey: string, @inject(TYPES.Lib.Spotify) spotify: Spotify, @inject(TYPES.Lib.Soundcloud) soundcloud: Soundcloud) {
     this.youtube = youtube;
     this.youtubeKey = youtubeKey;
     this.spotify = spotify;
+    this.soundcloud = soundcloud;
   }
 
   async youtubeVideoSearch(query: string): Promise<QueuedSong|null> {
@@ -112,6 +115,23 @@ export default class {
     }
 
     return songsToReturn;
+  }
+
+  async soundcloudSong(url: string): Promise<QueuedSong|null> {
+    try {
+      const songDetails = await this.soundcloud.tracks.getV2(url);
+
+      return {
+        title: songDetails.title,
+        artist: songDetails.user.username,
+        length: toSeconds(parse(songDetails.full_duration)),
+        url: songDetails.uri,
+        playlist: null,
+        isLive: false
+      };
+    } catch (_: unknown) {
+      return null;
+    }
   }
 
   async spotifySource(url: string): Promise<[QueuedSong[], number, number]> {

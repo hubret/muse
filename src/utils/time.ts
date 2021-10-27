@@ -1,6 +1,6 @@
 export const prettyTime = (seconds: number): string => {
   const nSeconds = seconds % 60;
-  const nMinutes = Math.floor(seconds / 60);
+  const nMinutes = Math.floor(seconds / 60) % 60;
   const nHours = Math.floor(nMinutes / 60);
 
   let res = '';
