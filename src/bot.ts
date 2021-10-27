@@ -10,7 +10,7 @@ import handleGuildCreate from './events/guild-create';
 import handleVoiceStateUpdate from './events/voice-state-update';
 import errorMsg from './utils/error-msg';
 import embed from './utils/embed';
-import {isUserInVoice} from './utils/channels';
+import {isUserInVoice, isAuthorInVoice} from './utils/channels';
 
 @injectable()
 export default class {
@@ -84,7 +84,7 @@ export default class {
       }
 
       try {
-        if (handler.requiresVC && !isUserInVoice(msg.guild, msg.author)) {
+        if (handler.requiresVC && !isAuthorInVoice(msg)) {
           await msg.channel.send(embed(`You're actually really dumb ${msg.author.username}. You have to join a voice channel first.`));
           return;
         }
